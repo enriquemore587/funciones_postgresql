@@ -1,0 +1,1 @@
+select cw.getmunicipalities()
