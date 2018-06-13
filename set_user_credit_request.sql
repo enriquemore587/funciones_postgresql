@@ -44,4 +44,4 @@ END;
 $$ LANGUAGE 'plpgsql';
 
 
-SELECT cw.set_user_credit_request('41343e72-a624-4850-aed1-515395f12cec', 5, 25000, 26000, 500.5, 550.5);
+SELECT cw.set_user_credit_request('2be57054-1ab1-4aab-a442-665592700037', 5, 25000, 26000, 500.5, 550.5);

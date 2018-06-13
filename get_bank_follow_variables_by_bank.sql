@@ -17,7 +17,7 @@ BEGIN
 	bcv.expression as rango, null as is_ok, NULL as var_array, NULL as status_variable, bcv.salida as salida
 	FROM cw.bank_follow_variables AS bfv
 	INNER JOIN cw.bank_custom_variables AS bcv ON bcv.id = bfv.personal_variable_id
-	WHERE bfv.bank_id = in_bank_id
+	WHERE bcv.bank_id = in_bank_id
 	UNION
 	SELECT bfv.short::INTEGER, bfv.variable_id as variable_id, vf.name AS name, FALSE AS cat, vf.id AS var_fix_id, 
 	bv."range" as rango, bv.is_ok, bv.var_array, bv.active as status_variable, 0 as salida
@@ -25,10 +25,11 @@ BEGIN
 	INNER JOIN cw.bank_variables AS bv ON bv.id = bfv.variable_id
 	INNER JOIN cw.variables_fix AS vf ON vf.id = bv.var_fix_id
 	WHERE bfv.bank_id = in_bank_id) ORDER BY short ASC;
+--WHERE bv.bank_id = in_bank_id) ORDER BY short ASC;
 
 
 END;
 $$
 LANGUAGE 'plpgsql';
 
-SELECT cw.get_bank_follow_variables_by_bank(5);
+SELECT cw.get_bank_follow_variables_by_bank(7);

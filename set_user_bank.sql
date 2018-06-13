@@ -5,21 +5,30 @@ OR REPLACE FUNCTION cw.set_user_bank (
 	OUT status INTEGER
 ) AS $$
 BEGIN
+
 	UPDATE cw.users
 SET id_profile = 4
 WHERE
-	"id" = in_user_id :: uuid ; INSERT INTO cw.users_bank (user_id, bank_id)
+	"id" = in_user_id :: uuid ; 
+
+INSERT INTO cw.users_bank (user_id, bank_id)
 VALUES
 	(
 		in_user_id :: uuid,
 		in_bank_id
-	) ; INSERT INTO cw.bank_variables (bank_id, var_fix_id) SELECT
+	) ; 
+
+INSERT INTO cw.bank_variables (bank_id, var_fix_id) SELECT
 		in_bank_id,
 		ID
 	FROM
 		cw.variables_fix
 	ORDER BY
-		sort ASC ; INSERT INTO cw.bank_follow_variables (bank_id, variable_id) SELECT
+		sort ASC ; 
+
+UPDATE cw.bank_variables SET "range" = '1-99'  WHERE var_fix_id = 7 AND bank_id = in_bank_id;
+
+INSERT INTO cw.bank_follow_variables (bank_id, variable_id) SELECT
 			in_bank_id,
 			bv. ID
 		FROM
@@ -28,11 +37,18 @@ VALUES
 		WHERE
 			bv.bank_id = in_bank_id
 		ORDER BY
-			vf.sort ; status = 0 ;
-		END ; $$ LANGUAGE 'plpgsql';
+			vf.sort ; 
+
+
+status = 0 ;
+
+
+		END ; 
+
+$$ LANGUAGE 'plpgsql';
 
 SELECT
 	cw.set_user_bank (
-		6,
-		'7ce7748f-713d-4cf6-b048-9115754870c6'
+		7,
+		'301eecfb-15da-4b8d-be17-459554ae7ea0'
 	);
